@@ -2,7 +2,7 @@ import { Server } from 'http';
 import logger from './config/logger';
 import app from './app';
 import mongoose from 'mongoose';
-import { MONGODB_URI } from './util/secrets';
+import { MONGODB_URI } from './utils/secrets';
 
 // Connect to MongoDB
 // TODO Mongoose config
