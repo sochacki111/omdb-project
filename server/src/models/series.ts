@@ -5,7 +5,7 @@ export interface IRating extends Document {
   Value: string;
 }
 
-export interface IFilm extends Document {
+export interface ISeries extends Document {
   Title: string;
   Year: string;
   Rated: string;
@@ -35,7 +35,7 @@ const RatingSchema: Schema = new Schema({
   Value: { type: String, required: true }
 });
 
-const FilmSchema: Schema = new Schema(
+const SeriesSchema: Schema = new Schema(
   {
     Title: { type: String, required: true },
     Year: { type: String, required: true },
@@ -70,6 +70,6 @@ const FilmSchema: Schema = new Schema(
   }
 );
 
-const Film = mongoose.model<IFilm>('Film', FilmSchema);
+const Series = mongoose.model<ISeries>('Series', SeriesSchema);
 
-export default Film;
+export default Series;

@@ -14,7 +14,7 @@ class MoviesController {
   }
 
   // eslint-disable-next-line class-methods-use-this
-  public async findOne(
+  public async searchByTitle(
     req: Request,
     res: Response,
     next: NextFunction
@@ -25,7 +25,28 @@ class MoviesController {
     );
     const createdMovie = await Movie.create(data);
     logger.debug(`Created movie: ${createdMovie}`);
-    return res.status(200).send(data);
+    return res.status(200).send(createdMovie);
+  }
+
+  // TODO Return only id + title?
+  // eslint-disable-next-line class-methods-use-this
+  public async findAll(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ): Promise<Response> {
+    const foundPhotos = await Movie.find({});
+    return res.status(200).send(foundPhotos);
+  }
+
+  // eslint-disable-next-line class-methods-use-this
+  public async findById(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ): Promise<Response> {
+    const foundMovie = await Movie.findById(req.params.id);
+    return res.status(200).send(foundMovie);
   }
 }
 
