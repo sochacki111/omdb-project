@@ -5,7 +5,7 @@ export interface IRating extends Document {
   Value: string;
 }
 
-export interface IFilm extends Document {
+export interface IMovie extends Document {
   Title: string;
   Year: string;
   Rated: string;
@@ -24,8 +24,12 @@ export interface IFilm extends Document {
   Metascore: string;
   imdbRating: string;
   imdbVotes: string;
+  imdbID: string;
   Type: string;
-  totalSeasons: string;
+  DVD: string;
+  BoxOffice: string;
+  Production: string;
+  Website: string;
   Response: string;
   comments: string[];
 }
@@ -35,7 +39,7 @@ const RatingSchema: Schema = new Schema({
   Value: { type: String, required: true }
 });
 
-const FilmSchema: Schema = new Schema(
+const MovieSchema: Schema = new Schema(
   {
     Title: { type: String, required: true },
     Year: { type: String, required: true },
@@ -55,8 +59,12 @@ const FilmSchema: Schema = new Schema(
     Metascore: { type: String, required: true },
     imdbRating: { type: String, required: true },
     imdbVotes: { type: String, required: true },
+    imdbID: { type: String, required: true },
     Type: { type: String, required: true },
-    totalSeasons: { type: String, required: true },
+    DVD: { type: String, required: true },
+    BoxOffice: { type: String, required: true },
+    Production: { type: String, required: true },
+    Website: { type: String, required: true },
     Response: { type: String, required: true },
     comments: [
       {
@@ -70,6 +78,6 @@ const FilmSchema: Schema = new Schema(
   }
 );
 
-const Film = mongoose.model<IFilm>('Film', FilmSchema);
+const Movie = mongoose.model<IMovie>('Movie', MovieSchema);
 
-export default Film;
+export default Movie;
