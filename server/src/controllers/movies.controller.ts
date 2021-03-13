@@ -2,6 +2,7 @@ import { Request, Response, NextFunction } from 'express';
 import axios from '../utils/axios-omdb';
 import Movie from '../models/movie';
 import logger from '../config/logger';
+import Error from '../interfaces/error.interface';
 
 class MoviesController {
   private static instance: MoviesController;
@@ -19,23 +20,40 @@ class MoviesController {
     res: Response,
     next: NextFunction
   ): Promise<Response> {
-    const title = req.query.t;
-    const { data } = await axios.get(
-      `?t=${title}&type=movie&apikey=${process.env.OMDB_API_KEY}`
-    );
-    const createdMovie = await Movie.create(data);
-    logger.debug(`Created movie: ${createdMovie}`);
-    return res.status(200).send(createdMovie);
+    try {
+      const title = req.query.t;
+      // TODO Add redis for cache data fetching
+      const { data } = await axios.get(
+        `?t=${title}&type=movie&apikey=${process.env.OMDB_API_KEY}`
+      );
+      const errorMessages: Error[] = [];
+      if (data.Error) {
+        errorMessages.push({
+          message: data.Error
+        });
+        return res.status(200).send({ errors: errorMessages });
+      }
+      let movie = await Movie.findOne({ imdbID: data.imdbID });
+      if (!movie) {
+        movie = await Movie.create(data);
+        logger.debug(`Saved movie: ${movie.Title}`);
+      }
+
+      return res.status(200).send(movie);
+    } catch (err) {
+      // TODO Return formatted error?
+      // TODO Wrap every method with error?
+      return res.status(400).send(err);
+    }
   }
 
-  // TODO Return only id + title?
   // eslint-disable-next-line class-methods-use-this
   public async findAll(
     req: Request,
     res: Response,
     next: NextFunction
   ): Promise<Response> {
-    const foundPhotos = await Movie.find({});
+    const foundPhotos = await Movie.find({}, '_id Title');
     return res.status(200).send(foundPhotos);
   }
 
@@ -45,8 +63,12 @@ class MoviesController {
     res: Response,
     next: NextFunction
   ): Promise<Response> {
-    const foundMovie = await Movie.findById(req.params.id);
-    return res.status(200).send(foundMovie);
+    try {
+      const foundMovie = await Movie.findById(req.params.id);
+      return res.status(200).send(foundMovie);
+    } catch(err) {
+      return res.status(400).send(err);
+    }
   }
 }
 
