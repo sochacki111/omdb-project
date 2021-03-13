@@ -3,6 +3,8 @@ import bodyParser from 'body-parser';
 import cors from 'cors';
 import morgan from 'morgan';
 
+import movieRoutes from './routes/movie.routes';
+
 // Create a new express app instance
 const app: Application = express();
 
@@ -20,4 +22,6 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.get('/', (req, res) => {
   res.send('Hello world!');
 });
+app.use('/movies', movieRoutes);
+
 export default app;
