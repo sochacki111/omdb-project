@@ -59,7 +59,7 @@ const MovieSchema: Schema = new Schema(
     Metascore: { type: String, required: true },
     imdbRating: { type: String, required: true },
     imdbVotes: { type: String, required: true },
-    imdbID: { type: String, required: true },
+    imdbID: { type: String, required: true, unique: true },
     Type: { type: String, required: true },
     DVD: { type: String, required: true },
     BoxOffice: { type: String, required: true },
