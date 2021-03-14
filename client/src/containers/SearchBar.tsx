@@ -21,6 +21,7 @@ const SearchBar = () => {
             onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
               setText(e.target.value)
             }
+            placeholder="Enter movie title"
           />
         </FormControl>
         <Button type="submit" value="Submit">

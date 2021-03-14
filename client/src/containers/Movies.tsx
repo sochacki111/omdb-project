@@ -24,7 +24,7 @@ export default function Movies() {
   };
 
   const handleClick = (param: GridRowParams) => {
-    history.push(`/${param.row.id}`);
+    history.push(`/movies/${param.row.id}`);
   };
 
   useEffect(() => {
