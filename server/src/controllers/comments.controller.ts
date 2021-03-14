@@ -56,9 +56,6 @@ class CommentsController {
     let commentIds = {};
 
     // TODO Use comment populate?
-    if (!mongoose.Types.ObjectId.isValid(movieId)) {
-      throw new Error('Incorrect movie Id');
-    }
     if (movieId) {
       foundMovie = await Movie.findById(movieId);
       if (foundMovie) {
