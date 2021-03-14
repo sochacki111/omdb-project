@@ -26,13 +26,15 @@ class CommentsController {
       movie: req.params.id
     };
 
+    // TODO Check if movie exists
+
     const createdComment = await Comment.create(commentToCreate);
     await Movie.findByIdAndUpdate(req.params.id, {
       $push: { comments: createdComment._id }
     })
       .lean()
       .exec();
-    return res.status(200).send(createdComment);
+    return res.status(201).send(createdComment);
   }
 
   // eslint-disable-next-line class-methods-use-this
@@ -62,9 +64,7 @@ class CommentsController {
         commentIds = { _id: { $in: foundMovie.comments } };
       }
     }
-    const foundComments = await Comment.find({
-      ...commentIds
-    });
+    const foundComments = await Comment.find(commentIds);
 
     return res.status(200).send(foundComments);
   }

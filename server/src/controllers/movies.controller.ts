@@ -43,7 +43,7 @@ class MoviesController {
     } catch (err) {
       // TODO Return formatted error?
       // TODO Wrap every method with error?
-      return res.status(400).send(err);
+      return res.status(500).send(err);
     }
   }
 

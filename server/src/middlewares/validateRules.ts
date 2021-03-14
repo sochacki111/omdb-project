@@ -1,7 +1,5 @@
 import {
-  matchedData,
-  validationResult,
-  ValidationError
+  validationResult
 } from 'express-validator';
 import { Request, Response, NextFunction } from 'express';
 import Error from '../interfaces/error.interface';
