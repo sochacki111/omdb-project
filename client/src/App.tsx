@@ -24,9 +24,8 @@ const useStyles = makeStyles((theme: Theme) =>
       flexGrow: 1
     },
     title: {
-      flexGrow: 1,
-      marginLeft: theme.spacing(10)
-    }
+      flexGrow: 1
+    },
   })
 );
 
@@ -48,7 +47,7 @@ function App() {
       <div className={classes.root}>
         <AppBar position="static">
           <Toolbar>
-            <Typography variant="h6" className={classes.title}>
+            <Typography variant="h6" className={classes.title} align="left">
               omdb-project
             </Typography>
             <Button color="inherit" component={Link} to="/movies">
@@ -63,9 +62,7 @@ function App() {
           </Toolbar>
         </AppBar>
       </div>
-      <main>
-        {routes}
-      </main>
+      <main>{routes}</main>
     </div>
   );
 }

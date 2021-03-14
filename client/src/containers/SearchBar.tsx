@@ -6,7 +6,7 @@ const { useState, useEffect, useCallback } = React;
 const SearchBar = () => {
   const [text, setText] = useState('');
 
-  const submitHandler = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSearchSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const { data } = await axios.get(`movies/search-by-title?t=${text}`);
     console.log(data);
@@ -14,14 +14,15 @@ const SearchBar = () => {
 
   return (
     <div>
-      <form onSubmit={submitHandler}>
+      <form onSubmit={handleSearchSubmit}>
         <FormControl>
           <Input
             type="text"
             onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
               setText(e.target.value)
             }
-            placeholder="Enter movie title"
+            placeholder="Search movie by title"
+            required
           />
         </FormControl>
         <Button type="submit" value="Submit">
