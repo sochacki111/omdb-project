@@ -31,7 +31,7 @@ class MoviesController {
         errorMessages.push({
           message: data.Error
         });
-        return res.status(200).send({ errors: errorMessages });
+        return res.status(404).send({ errors: errorMessages });
       }
       let movie = await Movie.findOne({ imdbID: data.imdbID });
       if (!movie) {
