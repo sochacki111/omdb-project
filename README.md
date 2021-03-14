@@ -1,5 +1,5 @@
 # omdb-project
-👉 https://omdb-project.netlify.app/ 👈
+👉 https://omdb-project.netlify.app 👈
 ## Requirements
 - Node.js  
 - MongoDB  
