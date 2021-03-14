@@ -12,6 +12,8 @@ import {
 import './App.css';
 import { Link, Route, Switch, Redirect } from 'react-router-dom';
 import SearchBar from './containers/SearchBar';
+import Movies from './containers/Movies';
+
 const { useState, useEffect, useCallback } = React;
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -50,7 +52,10 @@ function App() {
           </Toolbar>
         </AppBar>
       </div>
-      <main>{routes} </main>
+      <main>
+        {routes}
+        <Movies />
+      </main>
     </div>
   );
 }
