@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { useHistory } from 'react-router-dom';
 import axios from '../axios-base';
-import { DataGrid, GridRowParams, GridColDef } from '@material-ui/data-grid';
+import { DataGrid, GridColDef } from '@material-ui/data-grid';
 
 const columns: GridColDef[] = [
   { field: 'ownerName', headerName: 'Owner Name', flex: 0.2 },
@@ -10,8 +9,6 @@ const columns: GridColDef[] = [
 
 export default function Comments() {
   const [comments, setComments] = useState<any[]>([]);
-
-  let history = useHistory();
 
   const fetchComments = async () => {
     const { data } = await axios.get(`/comments`);

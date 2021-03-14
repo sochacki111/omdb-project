@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { match } from 'react-router-dom';
 import axios from '../axios-base';
-import { DataGrid, GridRowParams, GridColDef } from '@material-ui/data-grid';
+import { DataGrid, GridColDef } from '@material-ui/data-grid';
 import { Input, FormControl, Button } from '@material-ui/core';
+import { toast } from 'react-toastify';
 
 const commentColumns: GridColDef[] = [
   { field: 'ownerName', headerName: 'Owner Name', flex: 0.2 },
@@ -33,14 +34,17 @@ const Movie = (props: any) => {
 
   const handleCommentSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    // console.log(e.target);
 
-    const { data } = await axios.post(`/movies/${movieId}/comments`, {
-      text,
-      ownerName
-    });
-    console.log(data);
-    fetchComments();
+    try {
+      await axios.post(`/movies/${movieId}/comments`, {
+        text,
+        ownerName
+      });
+      toast.success(`Comment added!`);
+      fetchComments();
+    } catch (err) {
+      toast.error(`Something went wrong! Please try again later`);
+    }
   };
 
   useEffect(() => {
@@ -79,13 +83,7 @@ const Movie = (props: any) => {
     <div style={{ height: 400, width: '100%' }}>
       <h1>{movie && movie.Title}</h1>
       {theMovie}
-      <h2>Comments</h2>
-      <DataGrid
-        rows={comments}
-        columns={commentColumns}
-        pageSize={5}
-        disableSelectionOnClick
-      />
+      <h2>Add Comment</h2>
       <form onSubmit={handleCommentSubmit}>
         <FormControl>
           <Input
@@ -111,6 +109,13 @@ const Movie = (props: any) => {
           Submit
         </Button>
       </form>
+      <h2>Comments</h2>
+      <DataGrid
+        rows={comments}
+        columns={commentColumns}
+        pageSize={5}
+        disableSelectionOnClick
+      />
     </div>
   );
 };
