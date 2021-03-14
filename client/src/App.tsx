@@ -14,6 +14,7 @@ import { Link, Route, Switch, Redirect } from 'react-router-dom';
 import SearchBar from './containers/SearchBar';
 import Movies from './containers/Movies';
 import Movie from './containers/Movie';
+import Comments from './containers/Comments';
 
 const { useState, useEffect, useCallback } = React;
 
@@ -34,8 +35,8 @@ function App() {
 
   const routes = (
     <Switch>
-      {/* <Route path="/comments" component={Comments}></Route> */}
       <Route path="/movies/:id" component={Movie}></Route>
+      <Route path="/comments" component={Comments}></Route>
       <Route path="/movies" component={Movies}></Route>
       <Route path="/" exact component={SearchBar} />
       <Redirect to="/" />
@@ -55,6 +56,9 @@ function App() {
             </Button>
             <Button color="inherit" component={Link} to="/">
               Search movie
+            </Button>
+            <Button color="inherit" component={Link} to="/comments">
+              Comments
             </Button>
           </Toolbar>
         </AppBar>

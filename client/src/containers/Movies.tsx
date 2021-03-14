@@ -31,16 +31,19 @@ export default function Movies() {
     fetchMovies();
   }, []);
 
+  const isMoviesEmpty = movies.length ? true : false;
+
   return (
     <div style={{ height: 400, width: '100%' }}>
-      {console.log(movies)}
-      <DataGrid
-        rows={movies}
-        columns={columns}
-        pageSize={5}
-        disableSelectionOnClick
-        onRowClick={handleClick}
-      />
+      {isMoviesEmpty && (
+        <DataGrid
+          rows={movies}
+          columns={columns}
+          pageSize={5}
+          disableSelectionOnClick
+          onRowClick={handleClick}
+        />
+      )}
     </div>
   );
 }
