@@ -20,21 +20,25 @@ class CommentsController {
     res: Response,
     next: NextFunction
   ): Promise<Response> {
-    const commentToCreate = {
-      text: req.body.text,
-      ownerName: req.body.ownerName,
-      movie: req.params.id
-    };
+    try {
+      const commentToCreate = {
+        text: req.body.text,
+        ownerName: req.body.ownerName,
+        movie: req.params.id
+      };
 
-    // TODO Check if movie exists
+      // TODO Check if movie exists
 
-    const createdComment = await Comment.create(commentToCreate);
-    await Movie.findByIdAndUpdate(req.params.id, {
-      $push: { comments: createdComment._id }
-    })
-      .lean()
-      .exec();
-    return res.status(201).send(createdComment);
+      const createdComment = await Comment.create(commentToCreate);
+      await Movie.findByIdAndUpdate(req.params.id, {
+        $push: { comments: createdComment._id }
+      })
+        .lean()
+        .exec();
+      return res.status(201).send(createdComment);
+    } catch (err) {
+      return res.status(500).send(err);
+    }
   }
 
   // eslint-disable-next-line class-methods-use-this
@@ -43,8 +47,12 @@ class CommentsController {
     res: Response,
     next: NextFunction
   ): Promise<Response> {
-    const foundComments = await Comment.find({});
-    return res.status(200).send(foundComments);
+    try {
+      const foundComments = await Comment.find({});
+      return res.status(200).send(foundComments);
+    } catch (err) {
+      return res.status(500).send(err);
+    }
   }
 
   // eslint-disable-next-line class-methods-use-this
@@ -53,20 +61,24 @@ class CommentsController {
     res: Response,
     next: NextFunction
   ): Promise<Response> {
-    const movieId = req.params.id;
-    let foundMovie = null;
-    let commentIds = {};
+    try {
+      const movieId = req.params.id;
+      let foundMovie = null;
+      let commentIds = {};
 
-    // TODO Use comment populate?
-    if (movieId) {
-      foundMovie = await Movie.findById(movieId);
-      if (foundMovie) {
-        commentIds = { _id: { $in: foundMovie.comments } };
+      // TODO Use comment populate?
+      if (movieId) {
+        foundMovie = await Movie.findById(movieId);
+        if (foundMovie) {
+          commentIds = { _id: { $in: foundMovie.comments } };
+        }
       }
-    }
-    const foundComments = await Comment.find(commentIds);
+      const foundComments = await Comment.find(commentIds);
 
-    return res.status(200).send(foundComments);
+      return res.status(200).send(foundComments);
+    } catch (err) {
+      return res.status(500).send(err);
+    }
   }
 }
 

@@ -22,7 +22,7 @@ class MoviesController {
   ): Promise<Response> {
     try {
       const title = req.query.t;
-      // TODO Add redis for cache data fetching
+      // TODO Add Redis for cache data fetching
       const { data } = await axios.get(
         `?t=${title}&type=movie&apikey=${process.env.OMDB_API_KEY}`
       );
@@ -41,8 +41,6 @@ class MoviesController {
 
       return res.status(200).send(movie);
     } catch (err) {
-      // TODO Return formatted error?
-      // TODO Wrap every method with error?
       return res.status(500).send(err);
     }
   }
@@ -53,9 +51,12 @@ class MoviesController {
     res: Response,
     next: NextFunction
   ): Promise<Response> {
-    // TODO 404 ?
-    const foundPhotos = await Movie.find({}, '_id Title');
-    return res.status(200).send(foundPhotos);
+    try {
+      const foundPhotos = await Movie.find({}, '_id Title');
+      return res.status(200).send(foundPhotos);
+    } catch (err) {
+      return res.status(500).send(err);
+    }
   }
 
   // eslint-disable-next-line class-methods-use-this
@@ -72,7 +73,7 @@ class MoviesController {
 
       return res.status(200).send(foundMovie);
     } catch(err) {
-      return res.status(400).send(err);
+      return res.status(500).send(err);
     }
   }
 }
