@@ -23,7 +23,7 @@ npm start
 Then go to http://localhost:3000/
 
 ## Technologies
-✅ React
+✅ React  
 ✅ TypeScript  
 ✅ Express.js  
 ✅ MongoDB  
