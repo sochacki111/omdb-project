@@ -41,6 +41,7 @@ class MoviesController {
 
       return res.status(200).send(movie);
     } catch (err) {
+      logger.debug(err);
       return res.status(500).send(err);
     }
   }
@@ -55,6 +56,7 @@ class MoviesController {
       const foundPhotos = await Movie.find({}, '_id Title');
       return res.status(200).send(foundPhotos);
     } catch (err) {
+      logger.debug(err);
       return res.status(500).send(err);
     }
   }
@@ -73,6 +75,7 @@ class MoviesController {
 
       return res.status(200).send(foundMovie);
     } catch(err) {
+      logger.debug(err);
       return res.status(500).send(err);
     }
   }

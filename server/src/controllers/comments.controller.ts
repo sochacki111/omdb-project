@@ -1,8 +1,8 @@
 import { Request, Response, NextFunction } from 'express';
-import mongoose from 'mongoose';
 import Movie from '../models/movie';
-import Comment, { IComment } from '../models/comment';
+import Comment from '../models/comment';
 import logger from '../config/logger';
+import Error from '../interfaces/error.interface';
 
 class CommentsController {
   private static instance: CommentsController;
@@ -27,7 +27,14 @@ class CommentsController {
         movie: req.params.id
       };
 
-      // TODO Check if movie exists
+      const movie = await Movie.findOne({ _id: req.params.id });
+      const errorMessages: Error[] = [];
+      if (!movie) {
+        errorMessages.push({
+          message: 'movie not found!'
+        });
+        return res.status(404).send({ errors: errorMessages });
+      }
 
       const createdComment = await Comment.create(commentToCreate);
       await Movie.findByIdAndUpdate(req.params.id, {
@@ -37,6 +44,7 @@ class CommentsController {
         .exec();
       return res.status(201).send(createdComment);
     } catch (err) {
+      logger.debug(err);
       return res.status(500).send(err);
     }
   }
@@ -51,6 +59,7 @@ class CommentsController {
       const foundComments = await Comment.find({});
       return res.status(200).send(foundComments);
     } catch (err) {
+      logger.debug(err);
       return res.status(500).send(err);
     }
   }
@@ -63,20 +72,21 @@ class CommentsController {
   ): Promise<Response> {
     try {
       const movieId = req.params.id;
-      let foundMovie = null;
-      let commentIds = {};
+      const errorMessages: Error[] = [];
 
-      // TODO Use comment populate?
-      if (movieId) {
-        foundMovie = await Movie.findById(movieId);
-        if (foundMovie) {
-          commentIds = { _id: { $in: foundMovie.comments } };
-        }
+      const foundMovie = await Movie.findById(movieId);
+      if (!foundMovie) {
+        errorMessages.push({
+          message: 'movie not found!'
+        });
+        return res.status(404).send({ errors: errorMessages });
       }
+      const commentIds = { _id: { $in: foundMovie.comments } };
       const foundComments = await Comment.find(commentIds);
 
       return res.status(200).send(foundComments);
     } catch (err) {
+      logger.debug(err);
       return res.status(500).send(err);
     }
   }
