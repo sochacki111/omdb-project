@@ -1,7 +1,7 @@
 # omdb-project
 👉 https://omdb-project.netlify.app 👈  
 ## API Docs
-👉 http://localhost:8080/api-docs 👈
+👉 https://omdb-project.netlify.app/api-docs 👈
 ## Requirements
 - Node.js  
 - MongoDB  
