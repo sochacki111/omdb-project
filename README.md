@@ -1,7 +1,7 @@
 # omdb-project
 👉 https://omdb-project.netlify.app 👈  
 ## API Docs
-👉 https://omdb-project.netlify.app/api-docs 👈
+👉 https://omdb-project111.herokuapp.com/api-docs 👈
 ## Requirements
 - Node.js  
 - MongoDB  
