@@ -1,0 +1,32 @@
+version: '3'
+services:
+  server:
+    container_name: server-omdb-project
+    build:
+      context: ./server
+      dockerfile: Dockerfile.dev
+    restart: always
+    ports:
+      - '8080:8080'
+    networks:
+      - app-network
+  mongo:
+    container_name: mongo-omdb-project
+    image: mongo
+    ports:
+      - '27017:27017'
+    networks:
+      - app-network
+  client:
+    build:
+      context: ./client
+      dockerfile: Dockerfile
+    container_name: client-omdb-project
+    ports:
+      - '3000:3000'
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
