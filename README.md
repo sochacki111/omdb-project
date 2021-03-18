@@ -3,23 +3,14 @@
 ## API Docs
 👉 https://omdb-project111.herokuapp.com/api-docs 👈
 ## Requirements
-- Node.js  
-- MongoDB  
+- Docker
 - OMDB API Key: http://www.omdbapi.com/apikey.aspx  
 - Open ```server/.env.example``` and assign your OMDB API Key to ```OMDB_API_KEY=YOUR_OMDB_API_KEY``` then save 
 
 ## Installation
-Run following commands in project root directory to run backend:
+Run following commands in project root directory:
 ```sh
-cd server
-npm i
-npm start
-```
-Run following commands in project root directory to run frontend:
-```sh
-cd client
-npm i
-npm start
+docker-compose up --build
 ```
 
 ## Testing
