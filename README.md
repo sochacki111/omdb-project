@@ -22,6 +22,13 @@ npm i
 npm start
 ```
 
+## Testing
+In order to run tests run following commands in project root directory:
+```sh
+cd server
+npm run test
+```
+
 Then go to http://localhost:3000/
 
 *To get the full experience from working with the API please follow the API documentation available at http://localhost:8080/api-docs/*
