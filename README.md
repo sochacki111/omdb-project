@@ -29,5 +29,6 @@ Then go to http://localhost:3000/
 ✅ TypeScript  
 ✅ Express.js  
 ✅ MongoDB  
+✅ Docker  
 ✅ pino, morgan (logging)  
 ✅ Swagger (API Documentation)  
